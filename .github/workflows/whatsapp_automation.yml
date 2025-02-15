@@ -42,7 +42,7 @@ jobs:
         python WhatsApp_Automation.py --message "${{ github.event.inputs.message }}" --filepath "${{ github.event.inputs.filepath }}" --contacts "${{ github.event.inputs.contacts }}"
 
     - name: Upload log file
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: whatsapp-automation-log
         path: whatsapp_automation.log
