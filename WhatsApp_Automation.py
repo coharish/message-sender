@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(description='WhatsApp Automation Script')
 parser.add_argument('--message', type=str, required=True, help='Message to send')
 parser.add_argument('--filepath', type=str, required=False, help='File path to send')
 parser.add_argument('--contacts', type=str, required=True, help='Path to contacts CSV file')
-parser.add_argument('--user-data-dir', type=str, required=True, help='Path to the user data directory for Chrome')
+parser.add_argument('--user-data-dir', type=str, required=False, help='Path to the user data directory for Chrome')
 args = parser.parse_args()
 
 # Specify the path to the user data directory
@@ -25,7 +25,7 @@ user_data_dir = args.user_data_dir
 # Set up Chrome options to use the user data directory
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument(f"user-data-dir={user_data_dir}")
-chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
