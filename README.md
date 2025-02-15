@@ -38,3 +38,5 @@ You can also run the automation script using GitHub Actions.
 6. Click the "Run workflow" button to start the workflow with the provided inputs.
 
 This will execute the workflow immediately, running your script and generating the log file. You can download the log file from the GitHub Actions run page to see the detailed report of the execution.
+
+python3 WhatsApp_Automation.py --message "Dear Customer,\\nYou can now easily book your favorite playzone, *Janvi Funworld*, through https://funactions.in.\\n\\nDon’t miss out! Enjoy a 50% discount on your first booking. Plus, refer your friends and family to earn 50% off on your future bookings as well" --filepath "/Users/coharish/Desktop/FAJanviCollab.jpeg" --contacts "/Users/coharish/Documents/Codebase/whatsapp-automation/recipients.csv" --user-data-dir "/Users/coharish/Library/Application Support/Google/Chrome/Default"
