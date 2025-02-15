@@ -18,6 +18,10 @@ on:
         description: 'Path to contacts CSV file'
         required: true
         default: "/Users/coharish/Documents/Codebase/whatsapp-automation/recipients.csv"
+      user_data_dir:
+        description: 'Path to the user data directory for Chrome'
+        required: true
+        default: "/Users/coharish/Library/Application Support/Google/Chrome/Default"
 
 jobs:
   run-fa-message-automation:
@@ -37,9 +41,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install selenium
 
+    - name: Install Chromium and ChromeDriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
+        sudo apt-get install -y chromium-chromedriver
+      env:
+        DISPLAY: :99
+
     - name: Run FA Message Automation Script
       run: |
-        python WhatsApp_Automation.py --message "${{ github.event.inputs.message }}" --filepath "${{ github.event.inputs.filepath }}" --contacts "${{ github.event.inputs.contacts }}"
+        python WhatsApp_Automation.py --message "${{ github.event.inputs.message }}" --filepath "${{ github.event.inputs.filepath }}" --contacts "${{ github.event.inputs.contacts }}" --user-data-dir "${{ github.event.inputs.user_data_dir }}"
 
     - name: Upload log file
       uses: actions/upload-artifact@v4

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[13]:
-
 import csv
 import argparse
 from selenium import webdriver
@@ -11,29 +9,31 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
-import pdb
 from time import sleep
-
 
 # Set up argument parser
 parser = argparse.ArgumentParser(description='WhatsApp Automation Script')
 parser.add_argument('--message', type=str, required=True, help='Message to send')
 parser.add_argument('--filepath', type=str, required=False, help='File path to send')
 parser.add_argument('--contacts', type=str, required=True, help='Path to contacts CSV file')
+parser.add_argument('--user-data-dir', type=str, required=True, help='Path to the user data directory for Chrome')
 args = parser.parse_args()
 
 # Specify the path to the user data directory
-user_data_dir = "/Users/coharish/Library/Application Support/Google/Chrome/Default"
+user_data_dir = args.user_data_dir
 
 # Set up Chrome options to use the user data directory
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument(f"user-data-dir={user_data_dir}")
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
 # Initialize the Chrome driver with the specified options
 driver = webdriver.Chrome(options=chrome_options)
 
 driver.get("https://web.whatsapp.com/")
-wait = WebDriverWait(driver,600)
+wait = WebDriverWait(driver, 600)
 
 # Read recipient names and messages from CSV file
 recipients = []
@@ -53,7 +53,7 @@ for recipient in recipients:
         # Locate the search input field
         search_input = wait.until(ec.presence_of_element_located((By.XPATH, '//div[@aria-label="Search"][@role="textbox"]')))
 
-         # Clear the search input field by clicking the clear button if available
+        # Clear the search input field by clicking the clear button if available
         try:
             clear_button = WebDriverWait(driver, 2).until(ec.presence_of_element_located((By.XPATH, '//button[@aria-label="Cancel search"]')))
             clear_button.click()
@@ -64,7 +64,6 @@ for recipient in recipients:
         search_input.send_keys(Keys.CONTROL + 'a')
         search_input.send_keys(Keys.DELETE)
 
-        # sleep(1)
         # Enter the text into the search input field and press Enter
         search_input.send_keys(receiver + Keys.ENTER)
         print("search_input", receiver)
@@ -123,4 +122,3 @@ for recipient in recipients:
 
 sleep(1)
 print("All messages sent.")
-# %%
