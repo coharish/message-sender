@@ -37,5 +37,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Command to run the script
-CMD ["python", "WhatsApp_Automation.py"]
+# Set the entrypoint to allow passing command-line arguments
+ENTRYPOINT ["python", "WhatsApp_Automation.py"]
