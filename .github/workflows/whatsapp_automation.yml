@@ -5,6 +5,19 @@ on:
     branches:
       - main
   workflow_dispatch:  # Allow manual triggering of the workflow
+    inputs:
+      message:
+        description: 'Message to send'
+        required: true
+        default: "Dear Customer,\\nYou can now easily book your favorite playzone, *Janvi Funworld*, through https://funactions.in.\\n\\nDon’t miss out! Enjoy a 50% discount on your first booking. Plus, refer your friends and family to earn 50% off on your future bookings as well"
+      filepath:
+        description: 'File path to send'
+        required: false
+        default: "/Users/coharish/Desktop/FAJanviCollab.jpeg"
+      contacts:
+        description: 'Path to contacts CSV file'
+        required: true
+        default: "/Users/coharish/Documents/Codebase/whatsapp-automation/recipients.csv"
 
 jobs:
   run-fa-message-automation:
@@ -26,10 +39,10 @@ jobs:
 
     - name: Run FA Message Automation Script
       run: |
-        python WhatsApp_Automation.py --message "Dear Customer,\\nYou can now easily book your favorite playzone, *Janvi Funworld*, through https://funactions.in.\\n\\nDon’t miss out! Enjoy a 50% discount on your first booking. Plus, refer your friends and family to earn 50% off on your future bookings as well" --filepath "/Users/coharish/Desktop/FAJanviCollab.jpeg" --contacts "/Users/coharish/Documents/Codebase/whatsapp-automation/recipients.csv"
+        python WhatsApp_Automation.py --message "${{ github.event.inputs.message }}" --filepath "${{ github.event.inputs.filepath }}" --contacts "${{ github.event.inputs.contacts }}"
 
     - name: Upload log file
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: whatsapp-automation-log
         path: whatsapp_automation.log
